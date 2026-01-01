@@ -4,249 +4,666 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Took Gallery | فروشگاه آنلاین</title>
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* استایل‌ها اینجا هستن تا مطمئن باشیم لود میشن */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        
+        body {
+            background-color: white;
+            border: 8px solid #ff6b8b;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        /* نوار صورتی دور سایت */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            height: 8px;
+            background: #ff6b8b;
+            z-index: 10000;
+        }
+        
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            height: 8px;
+            background: #ff6b8b;
+            z-index: 10000;
+        }
+        
+        body > .left-border {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 8px;
+            background: #ff6b8b;
+            z-index: 10000;
+        }
+        
+        body > .right-border {
+            position: fixed;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 8px;
+            background: #ff6b8b;
+            z-index: 10000;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* هدر */
+        .top-bar {
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            font-size: 14px;
+        }
+        
+        .main-header {
+            background: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        /* منو همبرگر */
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #2d3436;
+            cursor: pointer;
+        }
+        
+        .logo h1 {
+            color: #6c5ce7;
+            font-size: 28px;
+        }
+        
+        /* جستجو */
+        .search-box {
+            flex: 1;
+            max-width: 500px;
+            display: flex;
+        }
+        
+        .search-box input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px 0 0 8px;
+            font-size: 16px;
+        }
+        
+        .search-box button {
+            background: #6c5ce7;
+            color: white;
+            border: none;
+            padding: 0 20px;
+            border-radius: 0 8px 8px 0;
+            cursor: pointer;
+        }
+        
+        /* آیکون‌ها */
+        .header-icons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .icon-btn {
+            position: relative;
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #2d3436;
+            cursor: pointer;
+            padding: 8px;
+        }
+        
+        .badge {
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            background: #ff6b8b;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* منو موبایل */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100vh;
+            background: white;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            z-index: 2000;
+            padding: 20px;
+            transition: right 0.3s;
+        }
+        
+        .mobile-menu.active {
+            right: 0;
+        }
+        
+        /* دسته‌بندی‌ها */
+        .categories {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .category-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+        
+        /* اسلایدر فروش ویژه */
+        .special-offer {
+            margin: 40px 0;
+        }
+        
+        .offer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .offer-slider {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+        }
+        
+        .slider-container {
+            overflow: hidden;
+            width: 100%;
+        }
+        
+        .slider-track {
+            display: flex;
+            gap: 20px;
+            transition: transform 0.3s;
+        }
+        
+        .product-card {
+            min-width: 250px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .product-image {
+            height: 200px;
+            background: linear-gradient(45deg, #ddd, #eee);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #666;
+        }
+        
+        .product-info {
+            padding: 15px;
+        }
+        
+        .price {
+            color: #ff6b8b;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        /* دکمه پشتیبان */
+        .support-circle {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #00cec9, #00b894);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,206,201,0.4);
+            z-index: 1000;
+        }
+        
+        /* ریسپانسیو */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            
+            .search-box {
+                display: none;
+            }
+            
+            .categories {
+                gap: 10px;
+            }
+            
+            .product-card {
+                min-width: 200px;
+            }
+            
+            .support-circle {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                left: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header-content {
+                flex-wrap: wrap;
+            }
+            
+            .logo h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- حاشیه‌های صورتی -->
+    <div class="left-border"></div>
+    <div class="right-border"></div>
+    
     <!-- نوار بالایی -->
     <div class="top-bar">
         <div class="container">
-            <span>ارسال رایگان برای خریدهای بالای ۲۰۰ هزار تومان</span>
-            <span>پشتیبانی: ۹۱۲۲۳۴۵۶۷</span>
+            ارسال رایگان برای خریدهای بالای ۲۰۰ هزار تومان | پشتیبانی: ۹۱۲۲۳۴۵۶۷
         </div>
     </div>
-
+    
     <!-- هدر اصلی -->
     <header class="main-header">
         <div class="container">
-            <!-- منو همبرگر -->
-            <button class="hamburger-menu" id="hamburgerMenu">
-                <i class="fas fa-bars"></i>
-            </button>
-
-            <!-- لوگو -->
-            <div class="logo">
-                <h1>Took Gallery</h1>
-            </div>
-
-            <!-- جستجو -->
-            <div class="search-box">
-                <input type="text" placeholder="جستجوی محصولات...">
-                <button><i class="fas fa-search"></i></button>
-            </div>
-
-            <!-- آیکون‌های کاربر -->
-            <div class="user-actions">
-                <button class="icon-btn" id="profileBtn">
-                    <i class="fas fa-user"></i>
-                    <span>پروفایل</span>
+            <div class="header-content">
+                <!-- منو همبرگر -->
+                <button class="hamburger" id="hamburgerBtn">
+                    <i class="fas fa-bars"></i>
                 </button>
-                <button class="icon-btn" id="wishlistBtn">
-                    <i class="fas fa-heart"></i>
-                    <span class="badge">۳</span>
-                </button>
-                <button class="icon-btn" id="cartBtn">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span class="badge">۲</span>
-                </button>
+                
+                <!-- لوگو -->
+                <div class="logo">
+                    <h1>🛍️ Took Gallery</h1>
+                </div>
+                
+                <!-- جستجو -->
+                <div class="search-box">
+                    <input type="text" placeholder="جستجوی محصولات...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                
+                <!-- آیکون‌ها -->
+                <div class="header-icons">
+                    <button class="icon-btn" id="profileBtn">
+                        <i class="fas fa-user"></i>
+                    </button>
+                    <button class="icon-btn" id="wishlistBtn">
+                        <i class="fas fa-heart"></i>
+                        <span class="badge">۳</span>
+                    </button>
+                    <button class="icon-btn" id="cartBtn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="badge">۲</span>
+                    </button>
+                </div>
             </div>
         </div>
     </header>
-
-    <!-- منو همبرگر بازشو -->
-    <nav class="mobile-nav" id="mobileNav">
-        <div class="mobile-nav-header">
+    
+    <!-- منو موبایل -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
             <h3>منو</h3>
-            <button class="close-menu" id="closeMenu">
+            <button id="closeMenuBtn" style="background: none; border: none; font-size: 24px; cursor: pointer;">
                 <i class="fas fa-times"></i>
             </button>
         </div>
-        <ul>
-            <li><a href="#"><i class="fas fa-home"></i> صفحه اصلی</a></li>
-            <li><a href="#"><i class="fas fa-th-large"></i> دسته‌بندی‌ها</a></li>
-            <li><a href="#"><i class="fas fa-fire"></i> فروش ویژه</a></li>
-            <li><a href="#"><i class="fas fa-newspaper"></i> محصولات جدید</a></li>
-            <li><a href="#"><i class="fas fa-user"></i> پروفایل</a></li>
-            <li><a href="#"><i class="fas fa-shopping-cart"></i> سبد خرید</a></li>
+        <ul style="list-style: none;">
+            <li style="margin-bottom: 15px;">
+                <a href="#" style="display: flex; align-items: center; gap: 15px; color: #2d3436; text-decoration: none; padding: 12px; border-radius: 8px;">
+                    <i class="fas fa-home"></i> صفحه اصلی
+                </a>
+            </li>
+            <li style="margin-bottom: 15px;">
+                <a href="#" style="display: flex; align-items: center; gap: 15px; color: #2d3436; text-decoration: none; padding: 12px; border-radius: 8px;">
+                    <i class="fas fa-th-large"></i> دسته‌بندی‌ها
+                </a>
+            </li>
+            <li style="margin-bottom: 15px;">
+                <a href="#" style="display: flex; align-items: center; gap: 15px; color: #2d3436; text-decoration: none; padding: 12px; border-radius: 8px;">
+                    <i class="fas fa-shopping-cart"></i> سبد خرید
+                </a>
+            </li>
+            <li style="margin-bottom: 15px;">
+                <a href="#" style="display: flex; align-items: center; gap: 15px; color: #2d3436; text-decoration: none; padding: 12px; border-radius: 8px;">
+                    <i class="fas fa-heart"></i> علاقه‌مندی‌ها
+                </a>
+            </li>
         </ul>
-    </nav>
-
-    <!-- منو دسته‌بندی -->
-    <nav class="category-nav">
-        <div class="container">
-            <ul>
-                <li><a href="#"><i class="fas fa-tshirt"></i> پوشاک <span>۱۵</span></a></li>
-                <li><a href="#"><i class="fas fa-laptop"></i> الکترونیک <span>۲۰</span></a></li>
-                <li><a href="#"><i class="fas fa-palette"></i> لوازم آرایشی <span>۱۸</span></a></li>
-                <li><a href="#"><i class="fas fa-home"></i> خانه و آشپزخانه <span>۱۲</span></a></li>
-            </ul>
+    </div>
+    
+    <!-- دسته‌بندی‌ها -->
+    <div class="container">
+        <div class="categories">
+            <div class="category-item">
+                <i class="fas fa-tshirt"></i>
+                <span>پوشاک</span>
+                <span style="background: #ff6b8b; color: white; padding: 2px 8px; border-radius: 10px; font-size: 12px;">۱۵</span>
+            </div>
+            <div class="category-item">
+                <i class="fas fa-laptop"></i>
+                <span>الکترونیک</span>
+                <span style="background: #6c5ce7; color: white; padding: 2px 8px; border-radius: 10px; font-size: 12px;">۲۰</span>
+            </div>
+            <div class="category-item">
+                <i class="fas fa-palette"></i>
+                <span>لوازم آرایشی</span>
+                <span style="background: #00cec9; color: white; padding: 2px 8px; border-radius: 10px; font-size: 12px;">۱۸</span>
+            </div>
         </div>
-    </nav>
-
-    <!-- بخش اصلی -->
+    </div>
+    
+    <!-- محتوای اصلی -->
     <main class="container">
-        <!-- بنر فروش ویژه -->
+        <!-- فروش ویژه -->
         <section class="special-offer">
-            <div class="section-header">
-                <h2><i class="fas fa-fire"></i> فروش شگفت‌انگیز</h2>
-                <div class="timer" id="timer">
+            <div class="offer-header">
+                <h2 style="color: #2d3436; border-right: 4px solid #ff6b8b; padding-right: 15px;">
+                    <i class="fas fa-fire" style="color: #ff6b8b;"></i> فروش شگفت‌انگیز
+                </h2>
+                <div style="display: flex; gap: 5px; background: #ff6b8b; color: white; padding: 8px 15px; border-radius: 20px; font-family: monospace; font-size: 20px;">
                     <span>۲۳</span>:<span>۵۶</span>:<span>۱۶</span>
                 </div>
             </div>
             
             <div class="offer-slider">
-                <button class="slider-btn prev"><i class="fas fa-chevron-right"></i></button>
-                <div class="offer-products">
-                    <!-- محصولات فروش ویژه -->
-                    <div class="product-card">
-                        <div class="product-image">تصویر نمونه ۱</div>
-                        <div class="product-info">
-                            <h3>محصول نمونه ۱</h3>
-                            <div class="price">
-                                <span class="old-price">۲۳۰,۰۰۰ تومان</span>
-                                <span class="new-price">۱۳۹,۰۰۰ تومان</span>
-                                <span class="discount">۴۰٪</span>
+                <button class="slider-btn prev" onclick="slidePrev()" style="background: white; border: 2px solid #ddd; width: 40px; height: 40px; border-radius: 50%; cursor: pointer;">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                
+                <div class="slider-container">
+                    <div class="slider-track" id="sliderTrack">
+                        <!-- محصول ۱ -->
+                        <div class="product-card" onclick="window.location.href='product.html'">
+                            <div class="product-image">
+                                تصویر نمونه ۱
                             </div>
-                            <button class="add-to-cart"><i class="fas fa-cart-plus"></i> افزودن به سبد</button>
+                            <div class="product-info">
+                                <h3>محصول نمونه ۱</h3>
+                                <div class="price">۱۳۹,۰۰۰ تومان</div>
+                                <button style="width: 100%; padding: 10px; background: #6c5ce7; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                                    <i class="fas fa-cart-plus"></i> افزودن به سبد
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="product-card">
-                        <div class="product-image">تصویر نمونه ۲</div>
-                        <div class="product-info">
-                            <h3>محصول نمونه ۲</h3>
-                            <div class="price">
-                                <span class="old-price">۱۸۰,۰۰۰ تومان</span>
-                                <span class="new-price">۱۰۸,۰۰۰ تومان</span>
-                                <span class="discount">۳۵٪</span>
+                        
+                        <!-- محصول ۲ -->
+                        <div class="product-card" onclick="window.location.href='product.html'">
+                            <div class="product-image">
+                                تصویر نمونه ۲
                             </div>
-                            <button class="add-to-cart"><i class="fas fa-cart-plus"></i> افزودن به سبد</button>
+                            <div class="product-info">
+                                <h3>محصول نمونه ۲</h3>
+                                <div class="price">۲۱۹,۰۰۰ تومان</div>
+                                <button style="width: 100%; padding: 10px; background: #6c5ce7; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                                    <i class="fas fa-cart-plus"></i> افزودن به سبد
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="product-card">
-                        <div class="product-image">تصویر نمونه ۳</div>
-                        <div class="product-info">
-                            <h3>محصول نمونه ۳</h3>
-                            <div class="price">
-                                <span class="old-price">۳۲۰,۰۰۰ تومان</span>
-                                <span class="new-price">۱۹۲,۰۰۰ تومان</span>
-                                <span class="discount">۴۰٪</span>
+                        
+                        <!-- محصول ۳ -->
+                        <div class="product-card" onclick="window.location.href='product.html'">
+                            <div class="product-image">
+                                تصویر نمونه ۳
                             </div>
-                            <button class="add-to-cart"><i class="fas fa-cart-plus"></i> افزودن به سبد</button>
+                            <div class="product-info">
+                                <h3>محصول نمونه ۳</h3>
+                                <div class="price">۱۷۹,۰۰۰ تومان</div>
+                                <button style="width: 100%; padding: 10px; background: #6c5ce7; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                                    <i class="fas fa-cart-plus"></i> افزودن به سبد
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <button class="slider-btn next"><i class="fas fa-chevron-left"></i></button>
+                
+                <button class="slider-btn next" onclick="slideNext()" style="background: white; border: 2px solid #ddd; width: 40px; height: 40px; border-radius: 50%; cursor: pointer;">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
             </div>
         </section>
-
+        
         <!-- محصولات جدید -->
-        <section class="new-products">
-            <div class="section-header">
-                <h2><i class="fas fa-newspaper"></i> محصولات جدید</h2>
-                <a href="#" class="view-all">مشاهده همه</a>
+        <section style="margin: 50px 0;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 style="color: #2d3436; border-right: 4px solid #00cec9; padding-right: 15px;">
+                    <i class="fas fa-newspaper" style="color: #00cec9;"></i> محصولات جدید
+                </h2>
+                <a href="#" style="color: #6c5ce7; text-decoration: none;">مشاهده همه →</a>
             </div>
             
-            <div class="products-grid">
-                <!-- محصولات جدید -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px;">
+                <!-- محصول جدید ۱ -->
                 <div class="product-card" onclick="window.location.href='product.html'">
-                    <div class="product-image">تصویر جدید ۱</div>
+                    <div class="product-image">
+                        محصول جدید ۱
+                    </div>
                     <div class="product-info">
                         <h3>محصول جدید ۱</h3>
                         <div class="price">۱۴۹,۰۰۰ تومان</div>
-                        <button class="quick-add"><i class="fas fa-cart-plus"></i></button>
+                        <button style="width: 40px; height: 40px; border-radius: 50%; background: #6c5ce7; color: white; border: none; cursor: pointer;">
+                            <i class="fas fa-cart-plus"></i>
+                        </button>
                     </div>
                 </div>
                 
+                <!-- محصول جدید ۲ -->
                 <div class="product-card" onclick="window.location.href='product.html'">
-                    <div class="product-image">تصویر جدید ۲</div>
+                    <div class="product-image">
+                        محصول جدید ۲
+                    </div>
                     <div class="product-info">
                         <h3>محصول جدید ۲</h3>
                         <div class="price">۲۱۹,۰۰۰ تومان</div>
-                        <button class="quick-add"><i class="fas fa-cart-plus"></i></button>
+                        <button style="width: 40px; height: 40px; border-radius: 50%; background: #6c5ce7; color: white; border: none; cursor: pointer;">
+                            <i class="fas fa-cart-plus"></i>
+                        </button>
                     </div>
                 </div>
                 
+                <!-- محصول جدید ۳ -->
                 <div class="product-card" onclick="window.location.href='product.html'">
-                    <div class="product-image">تصویر جدید ۳</div>
+                    <div class="product-image">
+                        محصول جدید ۳
+                    </div>
                     <div class="product-info">
                         <h3>محصول جدید ۳</h3>
                         <div class="price">۱۷۹,۰۰۰ تومان</div>
-                        <button class="quick-add"><i class="fas fa-cart-plus"></i></button>
-                    </div>
-                </div>
-                
-                <div class="product-card" onclick="window.location.href='product.html'">
-                    <div class="product-image">تصویر جدید ۴</div>
-                    <div class="product-info">
-                        <h3>محصول جدید ۴</h3>
-                        <div class="price">۲۴۹,۰۰۰ تومان</div>
-                        <button class="quick-add"><i class="fas fa-cart-plus"></i></button>
+                        <button style="width: 40px; height: 40px; border-radius: 50%; background: #6c5ce7; color: white; border: none; cursor: pointer;">
+                            <i class="fas fa-cart-plus"></i>
+                        </button>
                     </div>
                 </div>
             </div>
         </section>
     </main>
-
+    
     <!-- دکمه پشتیبان -->
-    <div class="support-btn" id="supportBtn">
+    <div class="support-circle" id="supportBtn">
         <i class="fas fa-headset"></i>
     </div>
-
-    <!-- پنل پشتیبان -->
-    <div class="support-panel" id="supportPanel">
-        <div class="support-header">
-            <h4><i class="fas fa-headset"></i> پشتیبانی آنلاین</h4>
-            <button class="close-support" id="closeSupport">
+    
+    <!-- پنل پشتیبان (مخفی) -->
+    <div id="supportPanel" style="position: fixed; bottom: 100px; left: 30px; width: 350px; background: white; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); z-index: 1001; display: none;">
+        <div style="background: linear-gradient(135deg, #6c5ce7, #a29bfe); color: white; padding: 15px; border-radius: 10px 10px 0 0; display: flex; justify-content: space-between;">
+            <h4 style="margin: 0;"><i class="fas fa-headset"></i> پشتیبانی آنلاین</h4>
+            <button onclick="closeSupport()" style="background: none; border: none; color: white; cursor: pointer;">
                 <i class="fas fa-times"></i>
             </button>
         </div>
-        <div class="chat-container">
-            <div class="chat-messages">
-                <div class="message received">
-                    <div class="message-content">
-                        <strong>پشتیبان:</strong> سلام! به Took Gallery خوش آمدید. چطور می‌توانم کمک کنم؟
-                    </div>
-                    <div class="message-time">۱۹:۳۰</div>
-                </div>
-            </div>
-            <div class="chat-input">
-                <input type="text" placeholder="پیام خود را بنویسید...">
-                <button><i class="fas fa-paper-plane"></i></button>
+        <div style="padding: 20px; max-height: 300px; overflow-y: auto;">
+            <div style="background: #f1f2f6; padding: 10px; border-radius: 10px; margin-bottom: 10px;">
+                <strong>پشتیبان:</strong> سلام! چطور می‌توانم کمک کنم؟
             </div>
         </div>
-        <div class="admin-login-btn">
-            <button id="adminLoginBtn">
+        <div style="padding: 15px; border-top: 1px solid #ddd;">
+            <input type="text" placeholder="پیام خود را بنویسید..." style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+            <button onclick="openAdminLogin()" style="width: 100%; margin-top: 10px; padding: 10px; background: #ff6b8b; color: white; border: none; border-radius: 5px; cursor: pointer;">
                 <i class="fas fa-lock"></i> ورود پشتیبان
             </button>
         </div>
     </div>
 
-    <!-- فوتر -->
-    <footer class="main-footer">
-        <div class="container">
-            <div class="footer-section">
-                <h4>Took Gallery</h4>
-                <p>فروشگاه آنلاین با بهترین محصولات</p>
-            </div>
-            <div class="footer-section">
-                <h4>دسته‌بندی‌ها</h4>
-                <ul>
-                    <li><a href="#">پوشاک</a></li>
-                    <li><a href="#">الکترونیک</a></li>
-                    <li><a href="#">لوازم آرایشی</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>تماس با ما</h4>
-                <p>تلفن: ۹۱۲۲۳۴۵۶۷</p>
-                <p>ایمیل: info@tookgallery.ir</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="script.js"></script>
+    <script>
+        // تمام JS در یک فایل
+        document.addEventListener('DOMContentLoaded', function() {
+            // عناصر
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const closeMenuBtn = document.getElementById('closeMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const supportBtn = document.getElementById('supportBtn');
+            const supportPanel = document.getElementById('supportPanel');
+            
+            // منو همبرگر
+            hamburgerBtn.addEventListener('click', function() {
+                mobileMenu.classList.add('active');
+            });
+            
+            closeMenuBtn.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+            });
+            
+            // پشتیبان
+            supportBtn.addEventListener('click', function() {
+                supportPanel.style.display = 'block';
+            });
+            
+            // اسلایدر
+            const sliderTrack = document.getElementById('sliderTrack');
+            let currentPosition = 0;
+            
+            window.slidePrev = function() {
+                currentPosition += 270;
+                if (currentPosition > 0) currentPosition = 0;
+                sliderTrack.style.transform = `translateX(${currentPosition}px)`;
+            }
+            
+            window.slideNext = function() {
+                currentPosition -= 270;
+                const maxPosition = -(sliderTrack.scrollWidth - sliderTrack.parentElement.offsetWidth);
+                if (currentPosition < maxPosition) currentPosition = maxPosition;
+                sliderTrack.style.transform = `translateX(${currentPosition}px)`;
+            }
+            
+            // تایمر
+            const timerElements = document.querySelectorAll('.offer-header span span');
+            function updateTimer() {
+                let hours = parseInt(timerElements[0].textContent);
+                let minutes = parseInt(timerElements[1].textContent);
+                let seconds = parseInt(timerElements[2].textContent);
+                
+                seconds--;
+                if (seconds < 0) {
+                    seconds = 59;
+                    minutes--;
+                    if (minutes < 0) {
+                        minutes = 59;
+                        hours--;
+                        if (hours < 0) {
+                            hours = 23;
+                            minutes = 56;
+                            seconds = 16;
+                        }
+                    }
+                }
+                
+                timerElements[0].textContent = hours.toString().padStart(2, '0');
+                timerElements[1].textContent = minutes.toString().padStart(2, '0');
+                timerElements[2].textContent = seconds.toString().padStart(2, '0');
+            }
+            setInterval(updateTimer, 1000);
+            
+            // توابع دیگر
+            window.closeSupport = function() {
+                supportPanel.style.display = 'none';
+            }
+            
+            window.openAdminLogin = function() {
+                const password = prompt('برای ورود به پنل پشتیبان، رمز عبور را وارد کنید:');
+                if (password === 'admin123') {
+                    alert('ورود موفق! به پنل مدیریت هدایت می‌شوید.');
+                    window.open('admin.html', '_blank');
+                } else if (password) {
+                    alert('رمز عبور اشتباه است!');
+                }
+            }
+            
+            // کلیک روی محصول
+            document.querySelectorAll('.product-card').forEach(card => {
+                card.style.cursor = 'pointer';
+            });
+        });
+    </script>
 </body>
 </html>
