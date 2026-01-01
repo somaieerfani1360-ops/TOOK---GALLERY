@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محصول نمونه | Took Gallery</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- نوار بالایی و هدر (همانند index.html) -->
+    <!-- به دلیل محدودیت فضا، کد هدر مشابه index.html است -->
+
+    <main class="container">
+        <div class="product-detail">
+            <!-- مسیر ناوبری -->
+            <nav class="breadcrumb">
+                <a href="index.html">خانه</a> / 
+                <a href="#">دسته‌بندی</a> / 
+                <span>محصول نمونه</span>
+            </nav>
+
+            <div class="product-main">
+                <!-- گالری تصاویر -->
+                <div class="product-gallery">
+                    <div class="main-image">تصویر اصلی محصول</div>
+                    <div class="thumbnails">
+                        <div class="thumb active">تصویر ۱</div>
+                        <div class="thumb">تصویر ۲</div>
+                        <div class="thumb">تصویر ۳</div>
+                    </div>
+                </div>
+
+                <!-- اطلاعات محصول -->
+                <div class="product-info">
+                    <h1>محصول نمونه ۱</h1>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <span>(۴۵ نظر)</span>
+                    </div>
+
+                    <div class="price-section">
+                        <div class="current-price">۱۳۹,۰۰۰ تومان</div>
+                        <div class="old-price">۲۳۰,۰۰۰ تومان</div>
+                        <div class="discount-badge">۴۰٪ تخفیف</div>
+                    </div>
+
+                    <!-- انتخاب رنگ -->
+                    <div class="color-selector">
+                        <h3>رنگ:</h3>
+                        <div class="colors">
+                            <button class="color-option active" style="background-color: #ff6b8b;"></button>
+                            <button class="color-option" style="background-color: #6c5ce7;"></button>
+                            <button class="color-option" style="background-color: #00cec9;"></button>
+                            <button class="color-option" style="background-color: #2d3436;"></button>
+                        </div>
+                    </div>
+
+                    <!-- انتخاب تعداد -->
+                    <div class="quantity-selector">
+                        <h3>تعداد:</h3>
+                        <div class="quantity-control">
+                            <button class="qty-btn minus"><i class="fas fa-minus"></i></button>
+                            <input type="number" value="1" min="1" max="10">
+                            <button class="qty-btn plus"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- دکمه‌های اقدام -->
+                    <div class="action-buttons">
+                        <button class="btn-primary add-to-cart">
+                            <i class="fas fa-cart-plus"></i> افزودن به سبد خرید
+                        </button>
+                        <button class="btn-secondary add-to-wishlist">
+                            <i class="far fa-heart"></i> افزودن به علاقه‌مندی‌ها
+                        </button>
+                    </div>
+
+                    <!-- مشخصات فنی -->
+                    <div class="specifications">
+                        <h3>مشخصات فنی:</h3>
+                        <ul>
+                            <li>جنس: پنبه مرغوب</li>
+                            <li>سایز: قابل شستشو</li>
+                            <li>کشور سازنده: ایران</li>
+                            <li>گارانتی: ۱۸ ماه</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- تب‌های اطلاعات بیشتر -->
+            <div class="product-tabs">
+                <div class="tabs-header">
+                    <button class="tab-btn active" data-tab="description">توضیحات</button>
+                    <button class="tab-btn" data-tab="reviews">نظرات (۴۵)</button>
+                    <button class="tab-btn" data-tab="shipping">ارسال و بازگشت</button>
+                </div>
+
+                <div class="tabs-content">
+                    <div class="tab-pane active" id="description">
+                        <p>این محصول نمونه با بهترین کیفیت و مواد اولیه تولید شده است.</p>
+                        <p>مناسب برای استفاده روزمره و دارای طراحی شیک و مدرن.</p>
+                    </div>
+
+                    <div class="tab-pane" id="reviews">
+                        <div class="review">
+                            <div class="review-header">
+                                <strong>کاربر ۱</strong>
+                                <div class="review-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                            <p>محصول عالی، کیفیت خوبی دارد.</p>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="shipping">
+                        <p>ارسال به سراسر کشور</p>
+                        <p>زمان تحویل: ۲ تا ۴ روز کاری</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // مدیریت تب‌ها
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // حذف کلاس فعال از همه تب‌ها
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+                
+                // فعال کردن تب انتخاب شده
+                btn.classList.add('active');
+                document.getElementById(btn.dataset.tab).classList.add('active');
+            });
+        });
+
+        // مدیریت تعداد
+        document.querySelector('.minus').addEventListener('click', () => {
+            const input = document.querySelector('.quantity-control input');
+            if (parseInt(input.value) > 1) {
+                input.value = parseInt(input.value) - 1;
+            }
+        });
+
+        document.querySelector('.plus').addEventListener('click', () => {
+            const input = document.querySelector('.quantity-control input');
+            if (parseInt(input.value) < 10) {
+                input.value = parseInt(input.value) + 1;
+            }
+        });
+
+        // انتخاب رنگ
+        document.querySelectorAll('.color-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.color-option').forEach(o => o.classList.remove('active'));
+                option.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
