@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سبد خرید | Took Gallery</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- هدر (همانند index.html) -->
+
+    <main class="container">
+        <h1><i class="fas fa-shopping-cart"></i> سبد خرید شما</h1>
+
+        <div class="cart-container">
+            <!-- آیتم‌های سبد خرید -->
+            <div class="cart-items">
+                <div class="cart-item">
+                    <div class="item-image">تصویر محصول</div>
+                    <div class="item-details">
+                        <h3>محصول نمونه ۱</h3>
+                        <div class="item-price">۱۳۹,۰۰۰ تومان</div>
+                        <div class="item-color">رنگ: صورتی</div>
+                    </div>
+                    <div class="item-quantity">
+                        <button class="qty-btn minus"><i class="fas fa-minus"></i></button>
+                        <input type="number" value="1" min="1">
+                        <button class="qty-btn plus"><i class="fas fa-plus"></i></button>
+                    </div>
+                    <div class="item-total">۱۳۹,۰۰۰ تومان</div>
+                    <button class="remove-item"><i class="fas fa-trash"></i></button>
+                </div>
+
+                <div class="cart-item">
+                    <div class="item-image">تصویر محصول</div>
+                    <div class="item-details">
+                        <h3>محصول نمونه ۲</h3>
+                        <div class="item-price">۲۱۹,۰۰۰ تومان</div>
+                        <div class="item-color">رنگ: آبی</div>
+                    </div>
+                    <div class="item-quantity">
+                        <button class="qty-btn minus"><i class="fas fa-minus"></i></button>
+                        <input type="number" value="2" min="1">
+                        <button class="qty-btn plus"><i class="fas fa-plus"></i></button>
+                    </div>
+                    <div class="item-total">۴۳۸,۰۰۰ تومان</div>
+                    <button class="remove-item"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+
+            <!-- خلاصه سفارش -->
+            <div class="cart-summary">
+                <h3>خلاصه سفارش</h3>
+                <div class="summary-row">
+                    <span>جمع کل:</span>
+                    <span>۵۷۷,۰۰۰ تومان</span>
+                </div>
+                <div class="summary-row">
+                    <span>تخفیف:</span>
+                    <span class="discount">-۵۰,۰۰۰ تومان</span>
+                </div>
+                <div class="summary-row">
+                    <span>هزینه ارسال:</span>
+                    <span>رایگان</span>
+                </div>
+                <div class="summary-row total">
+                    <strong>مبلغ قابل پرداخت:</strong>
+                    <strong class="final-price">۵۲۷,۰۰۰ تومان</strong>
+                </div>
+
+                <button class="btn-primary checkout-btn" onclick="window.location.href='checkout.html'">
+                    <i class="fas fa-credit-card"></i> تکمیل خرید
+                </button>
+
+                <button class="btn-secondary continue-shopping" onclick="window.location.href='index.html'">
+                    <i class="fas fa-shopping-bag"></i> ادامه خرید
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // مدیریت تعداد آیتم‌ها
+        document.querySelectorAll('.qty-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const input = this.parentElement.querySelector('input');
+                const priceElement = this.closest('.cart-item').querySelector('.item-price');
+                const totalElement = this.closest('.cart-item').querySelector('.item-total');
+                
+                let quantity = parseInt(input.value);
+                const price = parseInt(priceElement.textContent.replace(/,/g, ''));
+                
+                if (this.classList.contains('minus') && quantity > 1) {
+                    quantity--;
+                } else if (this.classList.contains('plus')) {
+                    quantity++;
+                }
+                
+                input.value = quantity;
+                totalElement.textContent = (price * quantity).toLocaleString() + ' تومان';
+                updateCartSummary();
+            });
+        });
+
+        // حذف آیتم
+        document.querySelectorAll('.remove-item').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.closest('.cart-item').remove();
+                updateCartSummary();
+            });
+        });
+
+        // بروزرسانی خلاصه سبد خرید
+        function updateCartSummary() {
+            let total = 0;
+            
+            document.querySelectorAll('.item-total').forEach(item => {
+                const price = parseInt(item.textContent.replace(/,/g, ''));
+                total += price;
+            });
+            
+            const summaryTotal = document.querySelector('.final-price');
+            summaryTotal.textContent = (total - 50000).toLocaleString() + ' تومان';
+        }
+    </script>
+</body>
+</html>
