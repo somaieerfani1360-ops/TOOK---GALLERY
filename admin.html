@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پنل مدیریت | Took Gallery</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* استایل‌های مخصوص پنل ادمین */
+        .admin-panel {
+            background: #f8f9fa;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .admin-header {
+            background: linear-gradient(135deg, #2d3436, #636e72);
+            color: white;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+        }
+
+        .admin-nav {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .admin-nav ul {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .admin-nav ul li a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 20px;
+            background: var(--gray-color);
+            border-radius: 8px;
+            color: var(--dark-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .admin-nav ul li a:hover,
+        .admin-nav ul li a.active {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .admin-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .admin-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .admin-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .order-item, .message-item {
+            border-bottom: 1px solid var(--gray-color);
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .order-item:last-child,
+        .message-item:last-child {
+            border-bottom: none;
+        }
+
+        .order-status {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .status-pending {
+            background: #ffeaa7;
+            color: #e17055;
+        }
+
+        .status-processing {
+            background: #a29bfe;
+            color: white;
+        }
+
+        .status-delivered {
+            background: #00b894;
+            color: white;
+        }
+
+        .message-content {
+            flex: 1;
+            margin: 0 15px;
+        }
+
+        .message-actions button {
+            margin-left: 10px;
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-reply {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-delete {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .search-orders {
+            margin-bottom: 20px;
+        }
+
+        .search-orders input {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid var(--gray-color);
+            border-radius: 25px;
+            font-size: 16px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 10px 0;
+            color: var(--secondary-color);
+        }
+
+        .logout-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body class="admin-panel">
+    <div class="container">
+        <div class="admin-header">
+            <h1><i class="fas fa-user-shield"></i> پنل مدیریت Took Gallery</h1>
+            <p>خوش آمدید، پشتیبان عزیز!</p>
+        </div>
+
+        <nav class="admin-nav">
+            <ul>
+                <li><a href="#" class="active"><i class="fas fa-tachometer-alt"></i> پیشخوان</a></li>
+                <li><a href="#orders"><i class="fas fa-shopping-cart"></i> سفارشات</a></li>
+                <li><a href="#messages"><i class="fas fa-comments"></i> پیام‌ها</a></li>
+                <li><a href="#products"><i class="fas fa-box"></i> محصولات</a></li>
+                <li><a href="#users"><i class="fas fa-users"></i> کاربران</a></li>
+            </ul>
+        </nav>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <i class="fas fa-shopping-cart fa-2x" style="color: #6c5ce7;"></i>
+                <div class="stat-value">۴۷</div>
+                <div class="stat-label">سفارشات جدید</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-comments fa-2x" style="color: #00cec9;"></i>
+                <div class="stat-value">۲۳</div>
+                <div class="stat-label">پیام‌های جدید</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-users fa-2x" style="color: #ff6b8b;"></i>
+                <div class="stat-value">۱,۲۳۴</div>
+                <div class="stat-label">کاربران آنلاین</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-money-bill-wave fa-2x" style="color: #00b894;"></i>
+                <div class="stat-value">۱۲.۵M</div>
+                <div class="stat-label">فروش امروز</div>
+            </div>
+        </div>
+
+        <div class="search-orders">
+            <input type="text" placeholder="جستجوی سفارش با کد رهگیری...">
+        </div>
+
+        <div class="admin-content">
+            <!-- سفارشات -->
+            <div class="admin-card" id="orders">
+                <h3><i class="fas fa-shopping-cart"></i> آخرین سفارشات</h3>
+                
+                <div class="order-item">
+                    <div>
+                        <strong>کد سفارش: TG-1689345678</strong>
+                        <div>تاریخ: ۱۴۰۲/۰۶/۱۵</div>
+                        <div>مبلغ: ۵۲۷,۰۰۰ تومان</div>
+                    </div>
+                    <div>
+                        <div class="order-status status-pending">در انتظار پرداخت</div>
+                        <button class="btn-view" onclick="viewOrderDetails('TG-1689345678')">مشاهده</button>
+                    </div>
+                </div>
+
+                <div class="order-item">
+                    <div>
+                        <strong>کد سفارش: TG-1689345123</strong>
+                        <div>تاریخ: ۱۴۰۲/۰۶/۱۴</div>
+                        <div>مبلغ: ۸۹۰,۰۰۰ تومان</div>
+                    </div>
+                    <div>
+                        <div class="order-status status-processing">در حال پردازش</div>
+                        <button class="btn-view" onclick="viewOrderDetails('TG-1689345123')">مشاهده</button>
+                    </div>
+                </div>
+
+                <div class="order-item">
+                    <div>
+                        <strong>کد سفارش: TG-1689344987</strong>
+                        <div>تاریخ: ۱۴۰۲/۰۶/۱۳</div>
+                        <div>مبلغ: ۳۴۰,۰۰۰ تومان</div>
+                    </div>
+                    <div>
+                        <div class="order-status status-delivered">تحویل شده</div>
+                        <button class="btn-view" onclick="viewOrderDetails('TG-1689344987')">مشاهده</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- پیام‌های کاربران -->
+            <div class="admin-card" id="messages">
+                <h3><i class="fas fa-comments"></i> پیام‌های کاربران</h3>
+                
+                <div class="message-item">
+                    <div class="message-content">
+                        <strong>کاربر ۱۲۳:</strong>
+                        <p>چطور می‌توانم سفارشم را پیگیری کنم؟</p>
+                        <small>زمان: ۱۹:۳۰</small>
+                    </div>
+                    <div class="message-actions">
+                        <button class="btn-reply" onclick="replyToMessage(1)"><i class="fas fa-reply"></i></button>
+                        <button class="btn-delete" onclick="deleteMessage(1)"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+
+                <div class="message-item">
+                    <div class="message-content">
+                        <strong>کاربر ۴۵۶:</strong>
+                        <p>محصولات جدید کی اضافه می‌شوند؟</p>
+                        <small>زمان: ۱۸:۱۵</small>
+                    </div>
+                    <div class="message-actions">
+                        <button class="btn-reply" onclick="replyToMessage(2)"><i class="fas fa-reply"></i></button>
+                        <button class="btn-delete" onclick="deleteMessage(2)"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="logout-btn" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i> خروج از پنل
+        </button>
+    </div>
+
+    <script>
+        // مشاهده جزئیات سفارش
+        function viewOrderDetails(orderCode) {
+            alert(`جزئیات سفارش ${orderCode}\n\nاین بخش در نسخه کامل قابل مشاهده است.`);
+        }
+
+        // پاسخ به پیام
+        function replyToMessage(messageId) {
+            const message = prompt('پاسخ خود را وارد کنید:');
+            if (message) {
+                alert(`پاسخ شما برای پیام ${messageId} ثبت شد.`);
+            }
+        }
+
+        // حذف پیام
+        function deleteMessage(messageId) {
+            if (confirm('آیا از حذف این پیام مطمئن هستید؟')) {
+                alert(`پیام ${messageId} حذف شد.`);
+            }
+        }
+
+        // جستجوی سفارش
+        document.querySelector('.search-orders input').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            console.log(`جستجو برای: ${searchTerm}`);
+        });
+
+        // خروج از پنل
+        function logout() {
+            if (confirm('آیا مایل به خروج از پنل مدیریت هستید؟')) {
+                window.location.href = 'index.html';
+            }
+        }
+
+        // مدیریت تب‌ها
+        document.querySelectorAll('.admin-nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // حذف کلاس فعال از همه لینک‌ها
+                document.querySelectorAll('.admin-nav a').forEach(a => a.classList.remove('active'));
+                
+                // اضافه کردن کلاس فعال به لینک انتخاب شده
+                this.classList.add('active');
+                
+                // اسکرول به بخش مربوطه
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+  </html>
