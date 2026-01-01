@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تکمیل خرید | Took Gallery</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- هدر (همانند index.html) -->
+
+    <main class="container">
+        <h1><i class="fas fa-credit-card"></i> تکمیل اطلاعات خرید</h1>
+
+        <div class="checkout-container">
+            <!-- فرم اطلاعات -->
+            <div class="checkout-form">
+                <h3>اطلاعات شخصی</h3>
+                
+                <div class="form-group">
+                    <label for="firstName"><i class="fas fa-user"></i> نام *</label>
+                    <input type="text" id="firstName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="lastName"><i class="fas fa-user"></i> نام خانوادگی *</label>
+                    <input type="text" id="lastName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone"><i class="fas fa-phone"></i> شماره تماس *</label>
+                    <input type="tel" id="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email"><i class="fas fa-envelope"></i> ایمیل</label>
+                    <input type="email" id="email">
+                </div>
+
+                <h3>آدرس تحویل</h3>
+
+                <div class="form-group">
+                    <label for="province"><i class="fas fa-map-marker-alt"></i> استان *</label>
+                    <select id="province" required>
+                        <option value="">انتخاب کنید</option>
+                        <option value="tehran">تهران</option>
+                        <option value="esfahan">اصفهان</option>
+                        <option value="mashhad">مشهد</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="city"><i class="fas fa-city"></i> شهر *</label>
+                    <input type="text" id="city" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="address"><i class="fas fa-home"></i> آدرس کامل *</label>
+                    <textarea id="address" rows="3" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="postalCode"><i class="fas fa-mail-bulk"></i> کد پستی *</label>
+                    <input type="text" id="postalCode" required>
+                </div>
+
+                <h3>روش ارسال</h3>
+                <div class="shipping-methods">
+                    <label class="shipping-method">
+                        <input type="radio" name="shipping" value="express" checked>
+                        <div class="method-info">
+                            <strong>پست پیشتاز</strong>
+                            <span>تحویل: ۲-۳ روز کاری</span>
+                            <span class="price">۲۰,۰۰۰ تومان</span>
+                        </div>
+                    </label>
+
+                    <label class="shipping-method">
+                        <input type="radio" name="shipping" value="free">
+                        <div class="method-info">
+                            <strong>ارسال رایگان</strong>
+                            <span>تحویل: ۴-۵ روز کاری</span>
+                            <span class="price free">رایگان</span>
+                        </div>
+                    </label>
+                </div>
+
+                <h3>روش پرداخت</h3>
+                <div class="payment-methods">
+                    <label class="payment-method">
+                        <input type="radio" name="payment" value="online" checked>
+                        <i class="fas fa-credit-card"></i>
+                        <span>پرداخت آنلاین</span>
+                    </label>
+
+                    <label class="payment-method">
+                        <input type="radio" name="payment" value="cash">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>پرداخت در محل</span>
+                    </label>
+                </div>
+
+                <div class="terms-agreement">
+                    <label>
+                        <input type="checkbox" required>
+                        <span>با <a href="#">قوانین و شرایط</a> فروشگاه موافقم</span>
+                    </label>
+                </div>
+
+                <button class="btn-primary submit-order" onclick="completePurchase()">
+                    <i class="fas fa-check-circle"></i> تأیید و پرداخت
+                </button>
+            </div>
+
+            <!-- خلاصه سفارش -->
+            <div class="order-summary">
+                <h3>خلاصه سفارش</h3>
+                <div class="summary-items">
+                    <div class="summary-item">
+                        <span>محصول نمونه ۱ × ۱</span>
+                        <span>۱۳۹,۰۰۰ تومان</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>محصول نمونه ۲ × ۲</span>
+                        <span>۴۳۸,۰۰۰ تومان</span>
+                    </div>
+                </div>
+
+                <div class="summary-totals">
+                    <div class="summary-row">
+                        <span>جمع اقلام:</span>
+                        <span>۵۷۷,۰۰۰ تومان</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>تخفیف:</span>
+                        <span class="discount">-۵۰,۰۰۰ تومان</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>هزینه ارسال:</span>
+                        <span id="shippingCost">۲۰,۰۰۰ تومان</span>
+                    </div>
+                    <div class="summary-row total">
+                        <strong>جمع کل:</strong>
+                        <strong id="finalTotal">۵۴۷,۰۰۰ تومان</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // مدیریت تغییر روش ارسال
+        document.querySelectorAll('input[name="shipping"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const shippingCost = document.getElementById('shippingCost');
+                const finalTotal = document.getElementById('finalTotal');
+                
+                if (this.value === 'free') {
+                    shippingCost.textContent = 'رایگان';
+                    finalTotal.textContent = '۵۲۷,۰۰۰ تومان';
+                } else {
+                    shippingCost.textContent = '۲۰,۰۰۰ تومان';
+                    finalTotal.textContent = '۵۴۷,۰۰۰ تومان';
+                }
+            });
+        });
+
+        // تکمیل خرید
+        function completePurchase() {
+            // اعتبارسنجی فرم
+            const requiredFields = document.querySelectorAll('input[required], select[required], textarea[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.style.borderColor = 'var(--primary-color)';
+                } else {
+                    field.style.borderColor = '';
+                }
+            });
+            
+            if (!document.querySelector('input[name="terms"]').checked) {
+                alert('لطفاً قوانین و شرایط را تأیید کنید.');
+                return;
+            }
+            
+            if (isValid) {
+                // شبیه‌سازی پرداخت موفق
+                const trackingCode = 'TG-' + Date.now();
+                
+                // نمایش رسید
+                const receipt = `
+                    <div class="receipt-modal">
+                        <div class="receipt-content">
+                            <h2><i class="fas fa-check-circle"></i> سفارش با موفقیت ثبت شد!</h2>
+                            <div class="tracking-info">
+                                <p><strong>کد رهگیری:</strong> ${trackingCode}</p>
+                                <p>این کد را نزد خود نگه دارید و در صورت نیاز به پشتیبان ارائه دهید.</p>
+                            </div>
+                            <button class="btn-primary" onclick="window.location.href='index.html'">
+                                بازگشت به صفحه اصلی
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                const modal = document.createElement('div');
+                modal.innerHTML = receipt;
+                document.body.appendChild(modal);
+                
+                // ذخیره کد رهگیری در localStorage
+                localStorage.setItem('lastTrackingCode', trackingCode);
+            }
+        }
+
+        // اضافه کردن استایل برای مدال
+        const modalStyle = document.createElement('style');
+        modalStyle.textContent = `
+            .receipt-modal {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+            }
+            
+            .receipt-content {
+                background: white;
+                padding: 40px;
+                border-radius: var(--border-radius);
+                text-align: center;
+                max-width: 500px;
+                animation: fadeIn 0.3s ease;
+            }
+            
+            .tracking-info {
+                background: #f8f9fa;
+                padding: 20px;
+                border-radius: 8px;
+                margin: 20px 0;
+                border-right: 4px solid var(--primary-color);
+            }
+        `;
+        document.head.appendChild(modalStyle);
+    </script>
+</body>
+</html>
